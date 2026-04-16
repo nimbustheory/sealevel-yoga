@@ -205,18 +205,18 @@ const ADMIN_CHARTS = {
 
 const AppContext = createContext(null);
 
-function PageHero({ image, title, subtitle }) {
+function PageHero({ image, title, subtitle, tall }) {
   const [imgFailed, setImgFailed] = useState(false);
   const isGradient = typeof image === "string" && image.startsWith("linear-gradient");
-  const showImage = !isGradient && !imgFailed;
+  const heroHeight = tall ? 312 : 240;
   return (
-    <div style={{ position: "relative", height: 240, marginBottom: 16, overflow: "hidden" }}>
+    <div style={{ position: "relative", height: heroHeight, marginBottom: 16, overflow: "hidden" }}>
       {isGradient || imgFailed ? (
         <div style={{ position: "absolute", inset: 0, background: isGradient ? image : GRADIENTS.home }} />
       ) : (
-        <img src={image} alt="" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.7)" }} onError={() => setImgFailed(true)} />
+        <img src={image} alt="" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.85)" }} onError={() => setImgFailed(true)} />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.45) 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 50%, rgba(0,0,0,0.30) 100%)" }} />
       <div style={{ position: "absolute", bottom: 24, left: 20, right: 20, zIndex: 2 }}>
         <h1 style={{ fontFamily: "'Arvo', serif", fontSize: "3.5rem", color: "#fff", margin: 0, fontWeight: 700, lineHeight: 1.05, textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>{title}</h1>
         {subtitle && <p style={{ fontSize: 15, color: "rgba(255,255,255,0.9)", margin: "8px 0 0", lineHeight: 1.4, maxWidth: "85%", textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>{subtitle}</p>}
@@ -352,7 +352,7 @@ function HomePage() {
 
   return (
     <div>
-      <PageHero image={STUDIO_IMAGES.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
+      <PageHero tall image={STUDIO_IMAGES.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
 
       <section style={{ padding: "0 16px", position: "relative", zIndex: 10 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
